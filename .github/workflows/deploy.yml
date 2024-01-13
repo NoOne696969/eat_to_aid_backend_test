@@ -4,9 +4,9 @@ name: CI-CD pipeline to AWS
 env:
   DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
   EB_S3_BUCKET_NAME: "elasticbeanstalk-us-east-2-751968443793"
-  EB_APPLICATION_NAME: "django-app"
-  EB_ENVIRONMENT_NAME: "Django-app-env"
-  DEPLOY_PACKAGE_NAME: "django-app-${{ github.sha }}.zip"
+  EB_APPLICATION_NAME: "django-app-test"
+  EB_ENVIRONMENT_NAME: "django-app-test"
+  DEPLOY_PACKAGE_NAME: "django-app-test-${{ github.sha }}.zip"
   VERSION_NAME: ${{ github.sha }}
   AWS_REGION_NAME: "us-east-2"
 
@@ -24,7 +24,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.11
 
       - name: Install dependencies
         run: |
