@@ -23,5 +23,5 @@ urlpatterns = [
     path('shops/',views.shop_list),
     path('shops/<int:id>',views.shop_detail),
     path('coupouns/',views.coupoun_list),
-    path('coupouns/<int:id>',views.shop_detail),
+    path('coupouns/<int:id>',views.coupoun_detail),
 ]

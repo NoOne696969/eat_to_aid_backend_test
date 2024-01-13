@@ -52,6 +52,8 @@ def shop_detail(request,id):
         shop.delete()
         return response.Response(serializer.data,status=status.HTTP_201_CREATED)
         
+
+
          
 @api_view(['GET','POST'])
 def coupoun_list(request):
@@ -71,3 +73,34 @@ def coupoun_list(request):
         except Exception as e:
             error_message = {'error': str(e)}
             return response.Response(error_message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
+
+@api_view(['GET','PUT','DELETE'])
+def coupoun_detail(request,id):
+    try:
+        shop = CoupounModel.objects.get(pk=id)
+    except Exception as e:
+        return response.Response({'success':False,'message':e},status=status.HTTP_404_NOT_FOUND)
+    if(request.method =='GET'):
+        try:
+            serializer = CoupounSerializer(shop)
+            responseData={'success':True,'data':serializer.data}
+            return response.Response(responseData)
+        except Exception as e:
+            return response.Response({'success':False,'message':e},status=status.HTTP_500_INTERNAL_SERVER_ERROR,)
+    elif(request.method =='PUT'):
+        try:
+            serializer = CoupounSerializer(shop,data=request.data)         
+            if(serializer.is_valid()):               
+                serializer.save()
+                return response.Response({'success':False,'message':"created"},serializer.data,status=status.HTTP_201_CREATED)
+            else:
+                return response.Response({'success':False,'message':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            error_message = {'error': str(e)}
+            return response.Response({'success':False,'message':serializer.errors}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    elif(request.method=='DELETE'):
+        shop.delete()
+        return response.Response(serializer.data,status=status.HTTP_201_CREATED)
+        
